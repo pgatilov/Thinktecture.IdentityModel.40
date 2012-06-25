@@ -27,7 +27,7 @@ namespace Thinktecture.IdentityModel.Http.Cors.WebAPI
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var httpRequest = new WebAPIHttpRequest(request, httpConfiguration);
+            var httpRequest = new WebApiHttpRequest(request, httpConfiguration);
             var accessRequest = new CorsAccessRequest(httpRequest);
 
             Task<HttpResponseMessage> task = accessRequest.IsCorsPreflight ?
@@ -41,7 +41,7 @@ namespace Thinktecture.IdentityModel.Http.Cors.WebAPI
                         var accessResponse = corsConfiguration.Engine.CheckAccess(accessRequest);
                         if (accessResponse != null)
                         {
-                            var httpResponse = new WebAPIHttpResponse(response);
+                            var httpResponse = new WebApiHttpResponse(response);
                             accessResponse.WriteResponse(httpResponse);
                         }
                         return response;

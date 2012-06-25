@@ -14,11 +14,11 @@ using System.Web.Http.Routing;
 
 namespace Thinktecture.IdentityModel.Http.Cors.WebAPI
 {
-    class WebAPIHttpResponse : IHttpResponseWrapper
+    class WebApiHttpResponse : IHttpResponseWrapper
     {
         HttpResponseMessage response;
 
-        public WebAPIHttpResponse(HttpResponseMessage response)
+        public WebApiHttpResponse(HttpResponseMessage response)
         {
             this.response = response;
         }

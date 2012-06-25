@@ -14,13 +14,13 @@ using System.Web.Http.Routing;
 
 namespace Thinktecture.IdentityModel.Http.Cors.WebAPI
 {
-    class WebAPIHttpRequest : IHttpRequestWrapper
+    class WebApiHttpRequest : IHttpRequestWrapper
     {
         HttpRequestMessage request;
         HttpConfiguration configuration;
         IHttpRouteData routeData;
 
-        public WebAPIHttpRequest(HttpRequestMessage request, HttpConfiguration configuration)
+        public WebApiHttpRequest(HttpRequestMessage request, HttpConfiguration configuration)
         {
             this.request = request;
             this.configuration = configuration;

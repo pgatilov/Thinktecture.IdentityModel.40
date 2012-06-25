@@ -13,7 +13,7 @@ using System.Web.Http;
 
 namespace Thinktecture.IdentityModel.Http.Cors.WebAPI
 {
-    public class WebAPICorsConfiguration : CorsConfiguration
+    public class WebApiCorsConfiguration : CorsConfiguration
     {
         public void RegisterGlobal(HttpConfiguration httpConfig)
         {

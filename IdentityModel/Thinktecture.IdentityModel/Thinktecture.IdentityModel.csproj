@@ -278,14 +278,14 @@
     <Compile Include="Http\Cors\MVC\MVCConfiguration.cs" />
     <Compile Include="Http\Cors\MVC\MVCRequest.cs" />
     <Compile Include="Http\Cors\MVC\MVCResponse.cs" />
-    <Compile Include="Http\Cors\WebAPI\WebAPIHttpResponse.cs" />
-    <Compile Include="Http\Cors\WebAPI\CorsMessageHandler.cs">
+    <Compile Include="Http\Cors\WebApi\WebApiHttpResponse.cs" />
+    <Compile Include="Http\Cors\WebApi\CorsMessageHandler.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\Cors\WebAPI\WebAPIHttpRequest.cs">
+    <Compile Include="Http\Cors\WebApi\WebApiHttpRequest.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\Cors\WebAPI\WebAPICorsConfiguration.cs">
+    <Compile Include="Http\Cors\WebApi\WebApiCorsConfiguration.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tokens\Http\BasicAuthenticationHeaderValue.cs" />
