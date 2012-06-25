@@ -285,7 +285,7 @@
     <Compile Include="Http\Cors\WebAPI\WebAPIHttpRequest.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\Cors\WebAPI\WebAPIConfiguration.cs">
+    <Compile Include="Http\Cors\WebAPI\WebAPICorsConfiguration.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tokens\Http\BasicAuthenticationHeaderValue.cs" />
