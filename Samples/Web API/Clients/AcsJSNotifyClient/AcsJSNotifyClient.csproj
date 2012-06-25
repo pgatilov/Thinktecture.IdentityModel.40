@@ -110,6 +110,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\IdentityModel\Thinktecture.IdentityModel\Thinktecture.IdentityModel.csproj">
+      <Project>{ac9a74df-4aab-43c8-b0ed-b7602721e545}</Project>
+      <Name>Thinktecture.IdentityModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{AB72FAB9-3817-401A-9A31-CC285806073D}</Project>
       <Name>Common</Name>
@@ -117,10 +121,6 @@
     <ProjectReference Include="..\..\Resources\Resources.csproj">
       <Project>{69E0331C-5569-41DF-BE06-927E7119BD2B}</Project>
       <Name>Resources</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Thinktecture.IdentityModel.Http.Client\Thinktecture.IdentityModel.Http.Client.csproj">
-      <Project>{49FD1DFF-8229-4ACB-905A-BAAFABFF9152}</Project>
-      <Name>Thinktecture.IdentityModel.Http.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

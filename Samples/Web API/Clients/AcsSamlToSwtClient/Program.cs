@@ -1,10 +1,11 @@
 ﻿using System;
-using System.IdentityModel.Protocols.WSTrust;
 using System.IdentityModel.Tokens;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.ServiceModel;
 using System.ServiceModel.Security;
+using Microsoft.IdentityModel.Protocols.WSTrust;
+using Microsoft.IdentityModel.SecurityTokenService;
 using Resources;
 using Thinktecture.IdentityModel.Clients;
 using Thinktecture.IdentityModel.Constants;
@@ -64,7 +65,7 @@ namespace AcsSamlToSwtClient
             {
                 RequestType = RequestTypes.Issue,
                 KeyType = KeyTypes.Bearer,
-                AppliesTo = new EndpointReference(_acsBaseAddress.AbsoluteUri)
+                AppliesTo = new EndpointAddress(_acsBaseAddress.AbsoluteUri)
             };
 
             var token = factory.CreateChannel().Issue(rst) as GenericXmlSecurityToken;

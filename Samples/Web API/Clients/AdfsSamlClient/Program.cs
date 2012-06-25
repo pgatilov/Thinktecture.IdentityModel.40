@@ -7,18 +7,18 @@ using System.ServiceModel.Security;
 using Microsoft.IdentityModel.Protocols.WSTrust;
 using Microsoft.IdentityModel.Protocols.WSTrust.Bindings;
 using Microsoft.IdentityModel.SecurityTokenService;
-using Thinktecture.IdentityModel.Utility;
+using Resources;
 using Thinktecture.Samples;
-using Thinktecture.Samples.Resources.Data;
+using Thinktecture.IdentityModel.Extensions;
 
 namespace AdfsSamlClient
 {
     class Program
     {
-        static Uri _baseAddress = new Uri(Constants.ServiceBaseAddressWebHost);
+        static Uri _baseAddress = new Uri(Constants.WebHostBaseAddress);
         
         static EndpointAddress _idpEndpoint =
-            new EndpointAddress("https://adfs.leastprivilege.vm/adfs/services/trust/13/windowstransport");
+            new EndpointAddress("https://" + Constants.ADFS + "/adfs/services/trust/13/username");
 
         static void Main(string[] args)
         {
@@ -26,7 +26,7 @@ namespace AdfsSamlClient
             {
                 Identity id = null;
                 Console.Clear();
-
+                
                 Helper.Timer(() =>
                 {
                     var token = GetIdentityToken();
@@ -47,6 +47,8 @@ namespace AdfsSamlClient
                 new WindowsWSTrustBinding(SecurityMode.Transport),
                 _idpEndpoint);
             factory.TrustVersion = TrustVersion.WSTrust13;
+            factory.Credentials.UserName.UserName = "bob";
+            factory.Credentials.UserName.Password = "bob";
 
             var rst = new RequestSecurityToken
             {
