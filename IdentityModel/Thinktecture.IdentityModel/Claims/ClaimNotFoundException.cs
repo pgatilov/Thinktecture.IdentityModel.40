@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) Dominick Baier.  All rights reserved.
+ * Copyright (c) Dominick Baier & Brock Allen.  All rights reserved.
  * 
  * This code is licensed under the Microsoft Permissive License (Ms-PL)
  * 
