@@ -274,10 +274,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Http\Cors\IHttpRequestWrapper.cs" />
-    <Compile Include="Http\Cors\MVC\CorsAuthorizationFilterAttribute.cs" />
-    <Compile Include="Http\Cors\MVC\MVCConfiguration.cs" />
-    <Compile Include="Http\Cors\MVC\MVCRequest.cs" />
-    <Compile Include="Http\Cors\MVC\MVCResponse.cs" />
+    <Compile Include="Http\Cors\Mvc\CorsAuthorizationFilterAttribute.cs" />
+    <Compile Include="Http\Cors\Mvc\MvcConfiguration.cs" />
+    <Compile Include="Http\Cors\Mvc\MvcRequest.cs" />
+    <Compile Include="Http\Cors\Mvc\MvcResponse.cs" />
     <Compile Include="Http\Cors\WebApi\WebApiHttpResponse.cs" />
     <Compile Include="Http\Cors\WebApi\CorsMessageHandler.cs">
       <SubType>Code</SubType>
