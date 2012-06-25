@@ -2,5 +2,5 @@ bin/
 obj/
 packages/
 *.suo
-*.user
+*.csproj.user
 build/
