@@ -28,6 +28,8 @@ namespace Thinktecture.IdentityModel.Http.Cors
         public const string ResponseHeader_AllowCookies = "Access-Control-Allow-Credentials";
         public const string ResponseHeader_CacheDuration = "Access-Control-Max-Age";
 
+        public const string ContentType = "Content-Type";
+
         public static readonly string[] SimpleRequestHeaders = new string[]
             {
                 "Origin",

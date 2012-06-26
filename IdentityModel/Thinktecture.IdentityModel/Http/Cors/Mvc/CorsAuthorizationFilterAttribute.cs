@@ -36,7 +36,7 @@ namespace Thinktecture.IdentityModel.Http.Cors.Mvc
                     }
                     return ret;
                 }
-                return MVCConfiguration.Configuration;
+                return MvcConfiguration.Configuration;
             }
         }
 
@@ -44,7 +44,7 @@ namespace Thinktecture.IdentityModel.Http.Cors.Mvc
         {
             var httpRequest = new MvcRequest(httpContext.Request);
             var accessRequest = new CorsAccessRequest(httpRequest);
-            var accessResponse = MVCConfiguration.Configuration.Engine.CheckAccess(accessRequest);
+            var accessResponse = MvcConfiguration.Configuration.Engine.CheckAccess(accessRequest);
             if (accessResponse != null)
             {
                 var response = httpContext.Response;
