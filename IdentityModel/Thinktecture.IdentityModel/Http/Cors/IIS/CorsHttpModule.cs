@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
+namespace Thinktecture.IdentityModel.Http.Cors.IIS
 {
     public class CorsHttpModule : IHttpModule
     {
@@ -20,17 +20,22 @@ namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
 
         void app_BeginRequest(object sender, EventArgs e)
         {
+            PerformCorsCheck();
+        }
+
+        void PerformCorsCheck()
+        {
             var ctx = System.Web.HttpContext.Current;
 
-            var httpRequest = new HttpContextRequest(ctx.Request);
+            var httpRequest = new HttpContextRequest(new HttpRequestWrapper(ctx.Request));
             var accessRequest = new CorsAccessRequest(httpRequest);
             if (accessRequest.IsCors)
             {
-                var accessResponse = HttpContextCorsConfiguration.Configuration.Engine.CheckAccess(accessRequest);
+                var accessResponse = UrlBasedCorsConfiguration.Configuration.Engine.CheckAccess(accessRequest);
                 if (accessResponse != null)
                 {
                     var response = ctx.Response;
-                    var httpResponse = new HttpContextResponse(response);
+                    var httpResponse = new HttpContextResponse(new HttpResponseWrapper(response));
                     accessResponse.WriteResponse(httpResponse);
                 }
 
@@ -41,7 +46,6 @@ namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
                 }
             }
         }
-        
         public void Dispose()
         {
         }

@@ -8,39 +8,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Thinktecture.IdentityModel.Http.Cors.IIS;
 
 namespace Thinktecture.IdentityModel.Http.Cors.Mvc
 {
-    class MvcRequest : IHttpRequestWrapper
+    class MvcRequest : HttpContextRequest
     {
-        HttpRequestBase request;
-        public MvcRequest(HttpRequestBase request)
+        public MvcRequest(HttpRequestBase request) 
+            : base(request)
         {
-            this.request = request;
         }
 
-        public string Resource
+        public override string Resource
         {
             get { return this.request.RequestContext.RouteData.Values["controller"] as string; }
         }
 
-        public IDictionary<string, object> Properties
+        public override IDictionary<string, object> Properties
         {
             get { return this.request.RequestContext.RouteData.Values; }
-        }
-
-        public string Method
-        {
-            get { return this.request.HttpMethod; }
-        }
-
-        public string GetHeader(string name)
-        {
-            if (this.request.Headers.AllKeys.Contains(name))
-            {
-                return this.request.Headers[name];
-            }
-            return null;
         }
     }
 }

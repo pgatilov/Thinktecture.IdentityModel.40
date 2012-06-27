@@ -10,15 +10,15 @@ using System.Text;
 using System.Threading;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
-namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
+namespace Thinktecture.IdentityModel.Http.Cors.IIS
 {
-    public class HttpContextCorsConfiguration
+    public class UrlBasedCorsConfiguration
     {
-        static HttpContextCorsConfiguration()
+        static UrlBasedCorsConfiguration()
         {
             Configuration = new CorsConfiguration();
         }
 
-        public static CorsConfiguration Configuration { get; private set; }    
+        public static CorsConfiguration Configuration { get; set; }    
     }
 }

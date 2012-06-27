@@ -10,22 +10,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
+namespace Thinktecture.IdentityModel.Http.Cors.IIS
 {
     class HttpContextRequest : IHttpRequestWrapper
     {
-        HttpRequest request;
-        public HttpContextRequest(HttpRequest request)
+        protected HttpRequestBase request;
+        public HttpContextRequest(HttpRequestBase request)
         {
             this.request = request;
         }
 
-        public string Resource
+        public virtual string Resource
         {
             get { return request.AppRelativeCurrentExecutionFilePath; }
         }
 
-        public IDictionary<string, object> Properties
+        public virtual IDictionary<string, object> Properties
         {
             get { return this.request.RequestContext.RouteData.Values; }
         }

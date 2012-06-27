@@ -4,15 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="~/Content/qunit.css" type="text/css" media="screen" />
-    <script src="~/Scripts/qunit.js"></script>
-    <script src="~/Scripts/jQuery-1.7.2.js"></script>
+    <link rel="stylesheet" href="@Url.Content("~/Content/qunit.css")" type="text/css" media="screen" />
+    <script src="@Url.Content("~/Scripts/qunit.js")"></script>
+    <script src="@Url.Content("~/Scripts/jQuery-1.7.2.js")"></script>
     <script>
-        var ajaxUrl = 'http://localhost/CorsSampleWebApi/api/values1';
-        var simpleCorsUrl = 'http://127.0.0.1/CorsSampleWebApi/api/values1';
-        var simpleCorsUrl_allowcookieandresponseheader = 'http://127.0.0.1/CorsSampleWebApi/api/values2';
-        var preflightCorsUrl_allowput = 'http://127.0.0.1/CorsSampleWebApi/api/values3';
-        var preflightCorsUrl_allowcookiesandheaders = 'http://127.0.0.1/CorsSampleWebApi/api/values4';
+        var ajaxUrl = 'http://localhost/CorsSampleMvc/values1/getdata';
+        var simpleCorsUrl = 'http://127.0.0.1/CorsSampleMvc/values1/getdata';
+        var simpleCorsUrl_allowcookieandresponseheader = 'http://127.0.0.1/CorsSampleMvc/values2/getdata';
+        var preflightCorsUrl_allowput = 'http://127.0.0.1/CorsSampleMvc/values3/getdata';
+        var preflightCorsUrl_allowcookiesandheaders = 'http://127.0.0.1/CorsSampleMvc/values4/getdata';
 
         function doAjax(settings) {
             settings = $.extend({

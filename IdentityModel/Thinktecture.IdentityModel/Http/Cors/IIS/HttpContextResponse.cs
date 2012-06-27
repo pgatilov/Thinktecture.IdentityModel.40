@@ -10,12 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
+namespace Thinktecture.IdentityModel.Http.Cors.IIS
 {
     class HttpContextResponse : IHttpResponseWrapper
     {
-        HttpResponse response;
-        public HttpContextResponse(HttpResponse response)
+        HttpResponseBase response;
+        public HttpContextResponse(HttpResponseBase response)
         {
             this.response = response;
         }

@@ -232,8 +232,9 @@
     <Compile Include="Extensions\IClaimsPrincipal\GetClaimValue.cs" />
     <Compile Include="Extensions\IClaimsPrincipal\Misc.cs" />
     <Compile Include="Extensions\IPrincipal.cs" />
-    <Compile Include="Http\Cors\HttpContext\CorsHttpModule.cs" />
-    <Compile Include="Http\Cors\HttpContext\HttpContextResponse.cs" />
+    <Compile Include="Http\Cors\Mvc\MvcCorsHttpModule.cs" />
+    <Compile Include="Http\Cors\IIS\CorsHttpModule.cs" />
+    <Compile Include="Http\Cors\IIS\HttpContextResponse.cs" />
     <Compile Include="Http\Cors\IHttpResponseWrapper.cs" />
     <Compile Include="Http\Cors\CorsAccessRequest.cs">
       <SubType>Code</SubType>
@@ -268,17 +269,15 @@
     <Compile Include="Http\Cors\CorsResourceSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\Cors\HttpContext\HttpContextCorsConfiguration.cs">
+    <Compile Include="Http\Cors\IIS\UrlBasedCorsConfiguration.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Http\Cors\HttpContext\HttpContextRequest.cs">
+    <Compile Include="Http\Cors\IIS\HttpContextRequest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Http\Cors\IHttpRequestWrapper.cs" />
-    <Compile Include="Http\Cors\Mvc\CorsAuthorizationFilterAttribute.cs" />
     <Compile Include="Http\Cors\Mvc\MvcCorsConfiguration.cs" />
     <Compile Include="Http\Cors\Mvc\MvcRequest.cs" />
-    <Compile Include="Http\Cors\Mvc\MvcResponse.cs" />
     <Compile Include="Http\Cors\WebApi\WebApiHttpResponse.cs" />
     <Compile Include="Http\Cors\WebApi\CorsMessageHandler.cs">
       <SubType>Code</SubType>
