@@ -30,7 +30,7 @@ namespace CorsSampleMvc
             );
 
         }
-        private void RegisterCors(CorsConfiguration corsConfig)
+        private void RegisterCors(MvcCorsConfiguration corsConfig)
         {
             corsConfig
                 .ForResources("Values1.GetData")

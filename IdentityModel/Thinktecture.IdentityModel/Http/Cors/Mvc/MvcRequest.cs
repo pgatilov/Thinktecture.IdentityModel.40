@@ -24,7 +24,7 @@ namespace Thinktecture.IdentityModel.Http.Cors.Mvc
             get 
             { 
                 var controller = this.request.RequestContext.RouteData.Values["controller"] as string;
-                if (MvcCorsConfiguration.ResourceNameIncludesActionName)
+                if (MvcCorsConfiguration.Configuration.ResourceNameIncludesActionName)
                 {
                     var action = this.request.RequestContext.RouteData.Values["action"] as string;
                     controller = String.Format("{0}.{1}", controller, action);

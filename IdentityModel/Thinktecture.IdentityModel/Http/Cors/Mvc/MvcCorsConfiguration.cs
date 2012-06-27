@@ -10,15 +10,17 @@ using System.Text;
 
 namespace Thinktecture.IdentityModel.Http.Cors.Mvc
 {
-    public static class MvcCorsConfiguration
+    public class MvcCorsConfiguration : CorsConfiguration
     {
         static MvcCorsConfiguration()
         {
-            ResourceNameIncludesActionName = true;
-            Configuration = new CorsConfiguration();
+            Configuration = new MvcCorsConfiguration()
+            {
+                ResourceNameIncludesActionName = true
+            };
         }
 
-        public static CorsConfiguration Configuration { get; set; }
-        public static bool ResourceNameIncludesActionName { get; set; }
+        public static MvcCorsConfiguration Configuration { get; set; }
+        public bool ResourceNameIncludesActionName { get; set; }
     }
 }
