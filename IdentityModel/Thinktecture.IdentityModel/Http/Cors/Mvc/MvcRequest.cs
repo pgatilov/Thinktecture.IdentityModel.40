@@ -21,7 +21,16 @@ namespace Thinktecture.IdentityModel.Http.Cors.Mvc
 
         public override string Resource
         {
-            get { return this.request.RequestContext.RouteData.Values["controller"] as string; }
+            get 
+            { 
+                var controller = this.request.RequestContext.RouteData.Values["controller"] as string;
+                if (MvcCorsConfiguration.ResourceNameIncludesActionName)
+                {
+                    var action = this.request.RequestContext.RouteData.Values["action"] as string;
+                    controller = String.Format("{0}.{1}", controller, action);
+                }
+                return controller;
+            }
         }
 
         public override IDictionary<string, object> Properties

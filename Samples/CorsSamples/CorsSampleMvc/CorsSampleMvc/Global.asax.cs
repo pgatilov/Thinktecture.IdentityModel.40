@@ -33,25 +33,25 @@ namespace CorsSampleMvc
         private void RegisterCors(CorsConfiguration corsConfig)
         {
             corsConfig
-                .ForResources("Values1")
+                .ForResources("Values1.GetData")
                 .ForOrigins("http://localhost")
                 .AllowMethods("GET", "POST");
 
             corsConfig
-                .ForResources("Values2")
+                .ForResources("Values2.GetData")
                 .ForOrigins("http://localhost")
                 .AllowMethods("GET", "POST")
                 .AllowCookies()
                 .AllowResponseHeaders("Foo");
 
             corsConfig
-                .ForResources("Values3")
+                .ForResources("Values3.GetData")
                 .ForOrigins("http://localhost")
                 .AllowMethods("GET", "POST", "PUT")
                 .AllowRequestHeaders("Content-Type");
 
             corsConfig
-                .ForResources("Values4")
+                .ForResources("Values4.GetData")
                 .ForOrigins("http://localhost")
                 .AllowAllMethods()
                 .AllowCookies()

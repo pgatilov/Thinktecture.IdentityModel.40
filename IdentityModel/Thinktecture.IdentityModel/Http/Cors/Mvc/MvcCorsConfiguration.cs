@@ -14,9 +14,11 @@ namespace Thinktecture.IdentityModel.Http.Cors.Mvc
     {
         static MvcCorsConfiguration()
         {
+            ResourceNameIncludesActionName = true;
             Configuration = new CorsConfiguration();
         }
 
-        public static CorsConfiguration Configuration { get; set; }    
+        public static CorsConfiguration Configuration { get; set; }
+        public static bool ResourceNameIncludesActionName { get; set; }
     }
 }
