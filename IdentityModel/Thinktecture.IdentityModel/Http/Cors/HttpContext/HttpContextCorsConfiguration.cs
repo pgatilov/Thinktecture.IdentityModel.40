@@ -7,17 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
 namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
 {
-    public class HttpContextConfiguration
+    public class HttpContextCorsConfiguration
     {
-        static HttpContextConfiguration()
+        static HttpContextCorsConfiguration()
         {
             Configuration = new CorsConfiguration();
         }
 
-        public static CorsConfiguration Configuration { get; private set; }
-
+        public static CorsConfiguration Configuration { get; private set; }    
     }
 }

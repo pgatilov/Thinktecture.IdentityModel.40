@@ -24,18 +24,21 @@ namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
 
             var httpRequest = new HttpContextRequest(ctx.Request);
             var accessRequest = new CorsAccessRequest(httpRequest);
-            var accessResponse = HttpContextConfiguration.Configuration.Engine.CheckAccess(accessRequest);
-            if (accessResponse != null)
+            if (accessRequest.IsCors)
             {
-                var response = ctx.Response;
-                var httpResponse = new HttpContextResponse(response);
-                accessResponse.WriteResponse(httpResponse);
-            }
+                var accessResponse = HttpContextCorsConfiguration.Configuration.Engine.CheckAccess(accessRequest);
+                if (accessResponse != null)
+                {
+                    var response = ctx.Response;
+                    var httpResponse = new HttpContextResponse(response);
+                    accessResponse.WriteResponse(httpResponse);
+                }
 
-            if (accessRequest.IsCorsPreflight)
-            {
-                ctx.Response.StatusCode = 200;
-                ctx.Response.End();
+                if (accessRequest.IsCorsPreflight)
+                {
+                    ctx.Response.StatusCode = 200;
+                    ctx.Response.End();
+                }
             }
         }
         

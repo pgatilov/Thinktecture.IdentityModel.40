@@ -22,7 +22,7 @@ namespace Thinktecture.IdentityModel.Http.Cors.HttpContext
 
         public string Resource
         {
-            get { return request.Url.AbsolutePath; }
+            get { return request.AppRelativeCurrentExecutionFilePath; }
         }
 
         public IDictionary<string, object> Properties

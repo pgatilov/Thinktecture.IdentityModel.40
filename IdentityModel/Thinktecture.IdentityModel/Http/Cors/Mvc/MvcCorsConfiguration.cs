@@ -10,9 +10,9 @@ using System.Text;
 
 namespace Thinktecture.IdentityModel.Http.Cors.Mvc
 {
-    public static class MvcConfiguration
+    public static class MvcCorsConfiguration
     {
-        static MvcConfiguration()
+        static MvcCorsConfiguration()
         {
             Configuration = new CorsConfiguration();
         }
