@@ -23,7 +23,7 @@ Helper library for identity & access control in .NET 4.0/WIF and MVC4/Web API.
 
 **Extension Methods**
 
-- XML (to and from *XmlReader*, *XmlDocument*, *XDocument*
+- XML (to and from *XmlReader*, *XmlDocument*, *XDocument*)
 - WS-Trust RSTRs
 - Security token conversion
 - X.509 Certificates
@@ -42,6 +42,7 @@ Helper library for identity & access control in .NET 4.0/WIF and MVC4/Web API.
 **Web**
 
 - Cookie protection
+- CORS
 
 **WS-Trust**
 
