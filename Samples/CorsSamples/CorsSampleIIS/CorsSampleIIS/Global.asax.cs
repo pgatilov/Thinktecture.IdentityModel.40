@@ -7,12 +7,17 @@ using System.Web.SessionState;
 using Thinktecture.IdentityModel.Http.Cors;
 using Thinktecture.IdentityModel.Http.Cors.IIS;
 
-namespace CorsSampleWebForms
+namespace CorsSampleIIS
 {
     public class Global : System.Web.HttpApplication
     {
         void ConfigureCors(CorsConfiguration corsConfig)
         {
+            corsConfig
+                .ForResources("~/Handler1.ashx")
+                .ForOrigins("http://foo.com", "http://bar.com")
+                .AllowAll();
+
             corsConfig
                 .ForResources("~/Handler1.ashx")
                 .ForOrigins("http://localhost")

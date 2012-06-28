@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CorsSampleWebForms
+namespace CorsSampleIIS
 {
     /// <summary>
     /// Summary description for Handler1
     /// </summary>
-    public class Handler1 : IHttpHandler
+    public class Handler2 : IHttpHandler
     {
         public void ProcessRequest(HttpContext ctx)
         {

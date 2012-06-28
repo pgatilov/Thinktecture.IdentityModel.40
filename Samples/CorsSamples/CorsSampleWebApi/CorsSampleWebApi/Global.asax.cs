@@ -17,10 +17,5 @@ namespace CorsSampleWebApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             CorsConfig.RegisterCors(GlobalConfiguration.Configuration);
         }
-
-        void Application_Error()
-        {
-            var ex = HttpContext.Current.Error;
-        }
     }
 }

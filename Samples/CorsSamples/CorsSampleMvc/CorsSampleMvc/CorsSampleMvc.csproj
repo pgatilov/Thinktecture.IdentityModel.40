@@ -112,7 +112,9 @@
       <DependentUpon>jquery-1.7.2.js</DependentUpon>
     </Content>
     <Content Include="Scripts\qunit.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

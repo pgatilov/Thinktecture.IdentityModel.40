@@ -5,11 +5,11 @@
     <script src="Scripts/qunit.js"></script>
     <script src="Scripts/jQuery-1.7.2.js"></script>
     <script>
-        var ajaxUrl = 'http://localhost/CorsSampleWebForms/handler1.ashx';
-        var simpleCorsUrl = 'http://127.0.0.1/CorsSampleWebForms/handler1.ashx';
-        var simpleCorsUrl_allowcookieandresponseheader = 'http://127.0.0.1/CorsSampleWebForms/handler2.ashx';
-        var preflightCorsUrl_allowput = 'http://127.0.0.1/CorsSampleWebForms/handler3.ashx';
-        var preflightCorsUrl_allowcookiesandheaders = 'http://127.0.0.1/CorsSampleWebForms/handler4.ashx';
+        var ajaxUrl = 'http://localhost/CorsSampleIIS/handler1.ashx';
+        var simpleCorsUrl = 'http://127.0.0.1/CorsSampleIIS/handler1.ashx';
+        var simpleCorsUrl_allowcookieandresponseheader = 'http://127.0.0.1/CorsSampleIIS/handler2.ashx';
+        var preflightCorsUrl_allowput = 'http://127.0.0.1/CorsSampleIIS/handler3.ashx';
+        var preflightCorsUrl_allowcookiesandheaders = 'http://127.0.0.1/CorsSampleIIS/handler4.ashx';
 
         function doAjax(settings) {
             settings = $.extend({
