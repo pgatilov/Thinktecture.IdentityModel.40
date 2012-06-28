@@ -57,4 +57,5 @@ Helper library for identity & access control in .NET 4.0/WIF and MVC4/Web API.
 - [Self Hosting](http://leastprivilege.com/2012/06/12/thinktecture-identitymodel-45-and-asp-net-web-api-self-hosting/) 
 - [JWT Support](http://leastprivilege.com/2012/05/25/json-web-token-jwt-support-in-thinktecture-identitymodel/) 
 - [Access Token Support](http://leastprivilege.com/2012/06/03/the-simplest-securitytoken-handler-you-can-write/)
+- [CORS Support](http://brockallen.com/2012/06/28/cors-support-in-webapi-mvc-and-iis-with-thinktecture-identitymodel/)
 
