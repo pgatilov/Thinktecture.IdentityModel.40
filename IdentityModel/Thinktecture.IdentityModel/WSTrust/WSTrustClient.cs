@@ -59,6 +59,7 @@ namespace Thinktecture.IdentityModel.WSTrust
             var factory = new WSTrustChannelFactory(
                 binding,
                 stsAddress);
+            factory.TrustVersion = TrustVersion.WSTrust13;
 
             var creds = factory.Endpoint.Behaviors.Find<ClientCredentials>();
             factory.Endpoint.Behaviors.Remove(creds);

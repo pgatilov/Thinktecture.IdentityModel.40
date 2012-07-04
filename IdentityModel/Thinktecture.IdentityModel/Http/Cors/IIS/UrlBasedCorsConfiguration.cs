@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
 namespace Thinktecture.IdentityModel.Http.Cors.IIS
 {

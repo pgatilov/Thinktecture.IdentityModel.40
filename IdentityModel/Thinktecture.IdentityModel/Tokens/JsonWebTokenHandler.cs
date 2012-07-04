@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.ServiceModel.Security;
 using System.Text;
 using System.Xml;
 using Microsoft.IdentityModel.Claims;
@@ -89,6 +90,15 @@ namespace Thinktecture.IdentityModel.Tokens
             }
 
             throw new InvalidOperationException("Only HMACSHA256, 384 and 512 are supported");
+        }
+
+        public override SecurityKeyIdentifierClause CreateSecurityTokenReference(SecurityToken token, bool attached)
+        {
+            var jwt = token as JsonWebToken;
+            if (jwt == null)
+                throw new SecurityTokenException("Expected JWT token.");
+
+            return new KeyNameIdentifierClause(jwt.Issuer);
         }
         #endregion
 
