@@ -14,14 +14,8 @@ namespace Thinktecture.IdentityModel
         {
             get
             {
-                var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, "")
-                    };
-
-                var anonId = new ClaimsIdentity(claims);
+                var anonId = new ClaimsIdentity();
                 var anonPrincipal = ClaimsPrincipal.CreateFromIdentity(anonId);
-
                 return anonPrincipal as ClaimsPrincipal;
             }
         }
