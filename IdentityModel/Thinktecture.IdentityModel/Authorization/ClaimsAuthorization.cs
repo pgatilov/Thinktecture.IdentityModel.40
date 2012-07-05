@@ -116,7 +116,7 @@ namespace Thinktecture.IdentityModel.Authorization
         /// <param name="resource">The resource.</param>
         /// <param name="action">The action.</param>
         /// <param name="principal">The principal.</param>
-        public static void DemandAccess(string resource, string action, ClaimsPrincipal principal)
+        public static void DemandAccess(string resource, string action, IClaimsPrincipal principal)
         {
             Contract.Requires(!String.IsNullOrEmpty(resource));
             Contract.Requires(!String.IsNullOrEmpty(action));
