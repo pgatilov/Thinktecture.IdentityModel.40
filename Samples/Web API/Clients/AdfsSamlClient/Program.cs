@@ -18,7 +18,7 @@ namespace AdfsSamlClient
         static Uri _baseAddress = new Uri(Constants.WebHostBaseAddress);
         
         static EndpointAddress _idpEndpoint =
-            new EndpointAddress("https://" + Constants.ADFS + "/adfs/services/trust/13/username");
+            new EndpointAddress("https://" + Constants.ADFS + "/adfs/services/trust/13/usernamemixed");
 
         static void Main(string[] args)
         {
@@ -44,7 +44,7 @@ namespace AdfsSamlClient
             "Requesting identity token".ConsoleYellow();
 
             var factory = new WSTrustChannelFactory(
-                new WindowsWSTrustBinding(SecurityMode.Transport),
+                new UserNameWSTrustBinding(SecurityMode.TransportWithMessageCredential),
                 _idpEndpoint);
             factory.TrustVersion = TrustVersion.WSTrust13;
             factory.Credentials.UserName.UserName = "bob";
@@ -54,7 +54,7 @@ namespace AdfsSamlClient
             {
                 RequestType = RequestTypes.Issue,
                 KeyType = KeyTypes.Bearer,
-                /* TokenType = Microsoft.IdentityModel.Tokens.SecurityTokenTypes.Saml2TokenProfile11, */
+                TokenType = Microsoft.IdentityModel.Tokens.SecurityTokenTypes.Saml2TokenProfile11,
                 AppliesTo = new EndpointAddress(Constants.Realm)
             };
 

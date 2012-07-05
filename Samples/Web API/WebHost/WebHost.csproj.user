@@ -33,7 +33,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>30061</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/webapisecurity/</IISUrl>
+          <IISUrl>https://localhost/webapisecurity/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>https://adfs.leastprivilege.vm/webapisecurity</CustomServerUrl>
