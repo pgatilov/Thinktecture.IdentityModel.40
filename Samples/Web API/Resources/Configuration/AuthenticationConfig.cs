@@ -83,7 +83,7 @@ namespace Resources.Configuration
                 {
                     return Principal.Create("Custom",
                         new Claim("customerid", "123"),
-                        new Claim("email", "foo@customer.com")).Identity as ClaimsIdentity;
+                        new Claim("email", "foo@customer.com"));
                 }
 
                 return null;

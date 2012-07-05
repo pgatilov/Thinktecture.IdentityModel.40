@@ -245,7 +245,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
         public virtual string CreateSessionToken(ClaimsPrincipal principal)
         {
-            var handler = Configuration.SessionToken.SecurityTokenHandler as IHttpSecurityTokenHandler;
+            var handler = Configuration.SessionToken.SecurityTokenHandler;
 
             var descriptor = new SecurityTokenDescriptor
             {
@@ -256,7 +256,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             };
 
             var token = handler.CreateToken(descriptor);
-            return handler.WriteToken(token);
+            return ((IHttpSecurityTokenHandler)handler).WriteToken(token);
         }
 
         public virtual string CreateSessionTokenResponse(string sessionToken)
