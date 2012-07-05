@@ -26,6 +26,8 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         public string DefaultAuthenticationScheme { get; set; }
         public ClaimsAuthenticationManager ClaimsAuthenticationManager { get; set; }
         public bool InheritHostClientIdentity { get; set; }
+        public bool EnableSessionToken { get; set; }
+        public SessionTokenConfiguration SessionToken { get; set; }
 
         #region HasMapping Properties
         public bool HasAuthorizationHeaderMapping
@@ -58,7 +60,10 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         {
             Mappings = new List<AuthenticationOptionMapping>();
             DefaultAuthenticationScheme = "unspecified";
-            InheritHostClientIdentity = true;
+            InheritHostClientIdentity = false;
+
+            EnableSessionToken = false;
+            SessionToken = new SessionTokenConfiguration();
         }
 
         public void AddAccessKey(SimpleSecurityTokenHandler handler, AuthenticationOptions options)
@@ -74,7 +79,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         {
             AddMapping(new AuthenticationOptionMapping
             {
-                TokenHandler = new SecurityTokenHandlerCollection { new SimpleSecurityTokenHandler("", validateTokenDelegate) },
+                TokenHandler = new SecurityTokenHandlerCollection { new SimpleSecurityTokenHandler(validateTokenDelegate) },
                 Options = options
             });
         }

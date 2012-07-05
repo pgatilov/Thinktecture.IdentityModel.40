@@ -10,7 +10,7 @@ namespace Thinktecture.IdentityModel
 {
     public static class Principal
     {
-        public static IClaimsPrincipal Anonymous
+        public static ClaimsPrincipal Anonymous
         {
             get
             {
@@ -22,7 +22,7 @@ namespace Thinktecture.IdentityModel
                 var anonId = new ClaimsIdentity(claims);
                 var anonPrincipal = ClaimsPrincipal.CreateFromIdentity(anonId);
 
-                return anonPrincipal;
+                return anonPrincipal as ClaimsPrincipal;
             }
         }
 

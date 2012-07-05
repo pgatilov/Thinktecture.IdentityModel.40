@@ -1,10 +1,11 @@
 ﻿/*
- * Copyright (c) Dominick Baier & Brock Allen.  All rights reserved.
+ * Copyright (c) Dominick Baier.  All rights reserved.
  * see license.txt
  */
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.IdentityModel.Tokens;
 using System.Linq;
@@ -14,9 +15,12 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Thinktecture.IdentityModel.Claims;
+using System.Web.Http.Routing;
 using Microsoft.IdentityModel.Claims;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
+using Thinktecture.IdentityModel;
+using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {
@@ -31,6 +35,20 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
         public ClaimsPrincipal Authenticate(HttpRequestMessage request)
         {
+            string resourceName = request.RequestUri.AbsoluteUri;
+
+            // if session feature is enabled (and this is not a token request), check for session token first
+            if (Configuration.EnableSessionToken && !IsSessionTokenRequest(request))
+            {
+                var principal = AuthenticateSessionToken(request);
+
+                if (principal.Identity.IsAuthenticated)
+                {
+                    return principal;
+                }
+            }
+
+            // check for credentials on the authorization header
             if (Configuration.HasAuthorizationHeaderMapping)
             {
                 var authZ = request.Headers.Authorization;
@@ -40,11 +58,12 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
                     if (principal.Identity.IsAuthenticated)
                     {
-                        return principal;
+                        return Transform(resourceName, principal) as ClaimsPrincipal;
                     }
                 }
             }
 
+            // check for credentials on other headers
             if (Configuration.HasHeaderMapping)
             {
                 if (request.Headers != null)
@@ -53,11 +72,12 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
                     if (principal.Identity.IsAuthenticated)
                     {
-                        return principal;
+                        return Transform(resourceName, principal);
                     }
                 }
             }
 
+            // check for credentials on the query string
             if (Configuration.HasQueryStringMapping)
             {
                 if (request.RequestUri != null && !string.IsNullOrWhiteSpace(request.RequestUri.Query))
@@ -66,80 +86,50 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
                     if (principal.Identity.IsAuthenticated)
                     {
-                        return principal;
+                        return Transform(resourceName, principal);
                     }
                 }
             }
             
-            return AnonymousClaimsPrincipal.Create();
+            // do claim transformation (if enabled), and return.
+            return Transform(resourceName, Principal.Anonymous);
         }
 
-        public ClaimsPrincipal Authenticate(Tuple<string, string> authorizationHeader, Dictionary<string, string> headers, Dictionary<string, string> queryString, X509Certificate2 clientCertificate)
+        public virtual ClaimsPrincipal AuthenticateSessionToken(HttpRequestMessage request)
         {
-            if (Configuration.HasAuthorizationHeaderMapping)
+            // grab authorization header
+            var authZheader = request.Headers.Authorization;
+
+            if (authZheader != null)
             {
-                if (authorizationHeader != null && !string.IsNullOrWhiteSpace(authorizationHeader.Item1))
+                // if configured scheme was sent, try to authenticate the session token
+                if (authZheader.Scheme == Configuration.SessionToken.Scheme)
                 {
-                    return AuthenticateAuthorizationHeader(authorizationHeader.Item1, authorizationHeader.Item2);
+                    var handler = Configuration.SessionToken.SecurityTokenHandler;
+
+                    var token = ((IHttpSecurityTokenHandler)handler).ReadToken(authZheader.Parameter);
+                    return new ClaimsPrincipal(handler.ValidateToken(token));
                 }
             }
 
-            if (Configuration.HasHeaderMapping)
-            {
-                if (headers != null && headers.Count > 0)
-                {
-                    var principal = AuthenticateHeaders(headers);
-
-                    if (principal.Identity.IsAuthenticated)
-                    {
-                        return principal;
-                    }
-                }
-            }
-
-            if (Configuration.HasQueryStringMapping)
-            {
-                if (queryString != null && queryString.Count > 0)
-                {
-                    var principal = AuthenticateQueryStrings(queryString);
-
-                    if (principal.Identity.IsAuthenticated)
-                    {
-                        return principal;
-                    }
-                }
-            }
-
-            if (Configuration.HasClientCertificateMapping)
-            {
-                var principal = AuthenticateClientCertificate(clientCertificate);
-
-                if (principal.Identity.IsAuthenticated)
-                {
-                    return principal;
-                }
-            }
-
-            return AnonymousClaimsPrincipal.Create();
+            return Principal.Anonymous;
         }
 
-        public ClaimsPrincipal AuthenticateAuthorizationHeader(string scheme, string credential)
+        public virtual ClaimsPrincipal AuthenticateAuthorizationHeader(string scheme, string credential)
         {
             SecurityTokenHandlerCollection handlers;
 
             if (Configuration.TryGetAuthorizationHeaderMapping(scheme, out handlers))
             {
-                return InvokeHandler(handlers, credential, null);
+                return InvokeHandler(handlers, credential);
             }
             else
             {
-                return AnonymousClaimsPrincipal.Create();
+                return Principal.Anonymous;
             }
         }
 
-        
-
-        public ClaimsPrincipal AuthenticateHeaders(Dictionary<string, string> headers)
+        public virtual ClaimsPrincipal AuthenticateHeaders(Dictionary<string, string> headers)
         {
             SecurityTokenHandlerCollection handlers;
 
@@ -147,14 +137,14 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             {
                 if (Configuration.TryGetHeaderMapping(header.Key, out handlers))
                 {
-                    return InvokeHandler(handlers, header.Value, null);
+                    return InvokeHandler(handlers, header.Value);
                 }
             }
 
-            return AnonymousClaimsPrincipal.Create();
+            return Principal.Anonymous;
         }
 
-        public ClaimsPrincipal AuthenticateHeaders(HttpRequestHeaders headers)
+        public virtual ClaimsPrincipal AuthenticateHeaders(HttpRequestHeaders headers)
         {
             SecurityTokenHandlerCollection handlers;
 
@@ -162,38 +152,55 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             {
                 if (Configuration.TryGetHeaderMapping(header.Key, out handlers))
                 {
-                    return InvokeHandler(handlers, header.Value.First(), null);
+                    return InvokeHandler(handlers, header.Value.First());
                 }
             }
 
-            return AnonymousClaimsPrincipal.Create();
+            return Principal.Anonymous;
         }
 
-        public ClaimsPrincipal AuthenticateQueryStrings(Dictionary<string, string> queryString)
+        public virtual ClaimsPrincipal AuthenticateQueryStrings(NameValueCollection queryString)
         {
             SecurityTokenHandlerCollection handlers;
 
             if (queryString != null)
             {
-                foreach (var param in queryString)
+                foreach (string param in queryString.Keys)
                 {
-                    if (Configuration.TryGetQueryStringMapping(param.Key, out handlers))
+                    if (Configuration.TryGetQueryStringMapping(param, out handlers))
                     {
-                        return InvokeHandler(handlers, param.Value, null);
+                        return InvokeHandler(handlers, queryString[param]);
                     }
                 }
             }
 
-            return AnonymousClaimsPrincipal.Create();
+            return Principal.Anonymous;
         }
 
-        public ClaimsPrincipal AuthenticateQueryStrings(Uri uri)
+        //public virtual ClaimsPrincipal AuthenticateQueryStrings(Dictionary<string, string> queryString)
+        //{
+        //    SecurityTokenHandlerCollection handlers;
+
+        //    if (queryString != null)
+        //    {
+        //        foreach (var param in queryString)
+        //        {
+        //            if (Configuration.TryGetQueryStringMapping(param.Key, out handlers))
+        //            {
+        //                return InvokeHandler(handlers, param.Value);
+        //            }
+        //        }
+        //    }
+
+        //    return Principal.Anonymous;
+        //}
+
+        public virtual ClaimsPrincipal AuthenticateQueryStrings(Uri uri)
         {
-            var qparams = CreateQueryStringDictionary(uri);
-            return AuthenticateQueryStrings(qparams);
+            return AuthenticateQueryStrings(uri.ParseQueryString());
         }
 
-        public ClaimsPrincipal AuthenticateClientCertificate(X509Certificate2 certificate)
+        public virtual ClaimsPrincipal AuthenticateClientCertificate(X509Certificate2 certificate)
         {
             SecurityTokenHandlerCollection handlers;
             var token = new X509SecurityToken(certificate);
@@ -204,10 +211,64 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                 return new ClaimsPrincipal(identity);
             }
 
-            return AnonymousClaimsPrincipal.Create();
+            return Principal.Anonymous;
+        }
+        
+        public virtual ClaimsPrincipal Transform(string resource, ClaimsPrincipal incomingPrincipal)
+        {
+            if (Configuration.ClaimsAuthenticationManager != null)
+            {
+                return Configuration.ClaimsAuthenticationManager.Authenticate(resource, incomingPrincipal) as ClaimsPrincipal;
+            }
+            else
+            {
+                return incomingPrincipal;
+            }
         }
 
-        private Dictionary<string, string> CreateQueryStringDictionary(Uri uri)
+        public virtual bool IsSessionTokenRequest(HttpRequestMessage request)
+        {
+            if (Configuration.EnableSessionToken == false)
+            {
+                return false;
+            }
+
+            // parse URL against config
+            // todo: need something more robust
+            if (request.RequestUri.AbsolutePath.EndsWith(Configuration.SessionToken.EndpointAddress, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        public virtual string CreateSessionToken(ClaimsPrincipal principal)
+        {
+            var handler = Configuration.SessionToken.SecurityTokenHandler as IHttpSecurityTokenHandler;
+
+            var descriptor = new SecurityTokenDescriptor
+            {
+                AppliesToAddress = Configuration.SessionToken.Audience.AbsoluteUri,
+                TokenIssuerName = Configuration.SessionToken.IssuerName,
+                SigningCredentials = new HmacSigningCredentials(Configuration.SessionToken.SigningKey),
+                Subject = principal.Identities.First()
+            };
+
+            var token = handler.CreateToken(descriptor);
+            return handler.WriteToken(token);
+        }
+
+        public virtual string CreateSessionTokenResponse(string sessionToken)
+        {
+            var response = new JObject();
+            response["access_token"] = sessionToken;
+            response["expires_in"] = DateTime.UtcNow.Add(Configuration.SessionToken.DefaultTokenLifetime).ToEpochTime();
+
+            return response.ToString();
+        }
+
+        protected virtual Dictionary<string, string> CreateQueryStringDictionary(Uri uri)
         {
             var dictionary = new Dictionary<string, string>();
             string[] pairs;
@@ -244,9 +305,9 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             return dictionary;
         }
 
-        private ClaimsPrincipal InvokeHandler(SecurityTokenHandlerCollection handlers, string tokenString, string identifier)
+        protected virtual ClaimsPrincipal InvokeHandler(SecurityTokenHandlerCollection handlers, string tokenString)
         {
-            SecurityTokenHandler handler;
+            SecurityTokenHandler handler = null;
 
             if (handlers.Count == 1)
             {
@@ -254,99 +315,25 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             }
             else
             {
-                handler = handlers[identifier];
+                foreach (var h in handlers)
+                {
+                    if (((IHttpSecurityTokenHandler)h).CanReadToken(tokenString))
+                    {
+                        handler = h;
+                        break;
+                    }
+                }
             }
 
-            IHttpSecurityTokenHandler httpTokenHandler = handler as IHttpSecurityTokenHandler;
-            if (httpTokenHandler != null)
+            if (handler != null)
             {
-                var token = httpTokenHandler.ReadToken(tokenString);
-                return new ClaimsPrincipal(handler.ValidateToken(token));
+                var token = ((IHttpSecurityTokenHandler)handler).ReadToken(tokenString);
+                var principal = new ClaimsPrincipal(handler.ValidateToken(token));
+
+                return principal;
             }
 
-            return AnonymousClaimsPrincipal.Create();
+            throw new InvalidOperationException("No handler found");
         }
-
-        #region Session
-        public SessionSecurityToken CreateSessionToken(ClaimsPrincipal principal)
-        {
-            var token = new SessionSecurityToken(principal, TimeSpan.FromHours(8));
-
-            // configure token
-
-            return token;
-        }
-
-        public void IssueSessionToken(SessionSecurityToken token, HttpResponseMessage response)
-        {
-            var handler = new MachineKeySessionSecurityTokenHandler();
-            var bytes = handler.WriteToken(token);
-
-            WriteInternal(bytes, "auth", "/", "", token.ValidTo, true, true, response);
-
-        }
-
-        public const int DefaultChunkSize = 2000;
-        internal void WriteInternal(byte[] value, string name, string path, string domain, DateTime expirationTime, bool secure, bool httpOnly, HttpResponseMessage response)
-        {
-            string cookieValue = Convert.ToBase64String(value);
-
-            //this.DeleteInternal(name, path, domain, requestCookies, responseCookies);
-
-            var cookies = new List<CookieHeaderValue>();
-            foreach (KeyValuePair<string, string> keyValuePair in this.GetCookieChunks(name, cookieValue))
-            {
-                CookieHeaderValue cookieHeader = new CookieHeaderValue(keyValuePair.Key, keyValuePair.Value);
-
-                cookieHeader.Secure = secure;
-                cookieHeader.HttpOnly = httpOnly;
-                cookieHeader.Path = path;
-
-                if (!string.IsNullOrEmpty(domain))
-                    cookieHeader.Domain = domain;
-                if (expirationTime != DateTime.MinValue)
-                    cookieHeader.Expires = expirationTime;
-
-                cookies.Add(cookieHeader);
-
-                //if (System.IdentityModel.Services.DiagnosticUtility.ShouldTrace(TraceEventType.Information))
-                //    TraceUtility.TraceEvent(TraceEventType.Information, 786438, (string)null, (TraceRecord)new ChunkedCookieHandlerTraceRecord(ChunkedCookieHandlerTraceRecord.Action.Writing, cookie, cookie.Path), (object)null);
-            }
-
-            response.Headers.AddCookies(cookies);
-        }
-
-        private IEnumerable<KeyValuePair<string, string>> GetCookieChunks(string baseName, string cookieValue)
-        {
-            int chunksRequired = CeilingDivide(cookieValue.Length, DefaultChunkSize);
-
-            //if (chunksRequired > 20 && System.IdentityModel.Services.DiagnosticUtility.ShouldTrace(TraceEventType.Warning))
-            //    TraceUtility.TraceString(TraceEventType.Warning, System.IdentityModel.Services.SR.GetString("ID8008"), new object[0]);
-
-            for (int i = 0; i < chunksRequired; ++i)
-                yield return new KeyValuePair<string, string>(GetChunkName(baseName, i), cookieValue.Substring(i * DefaultChunkSize, Math.Min(cookieValue.Length - i * DefaultChunkSize, DefaultChunkSize)));
-        }
-
-        public static int CeilingDivide(int dividend, int divisor)
-        {
-            int num = dividend % divisor;
-            int num2 = dividend / divisor;
-            if (num > 0)
-            {
-                num2++;
-            }
-            return num2;
-        }
-
-
-
-        private string GetChunkName(string baseName, int chunkIndex)
-        {
-            if (chunkIndex != 0)
-                return baseName + chunkIndex.ToString((IFormatProvider)CultureInfo.InvariantCulture);
-            else
-                return baseName;
-        }
-        #endregion
     }
 }

@@ -10,6 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thinktecture.IdentityModel.Claims;
 using Microsoft.IdentityModel.Claims;
+using System;
+using System.IdentityModel.Tokens;
+using System.Web;
+using System.Text;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {
@@ -26,7 +30,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         {
             if (_authN.Configuration.InheritHostClientIdentity == false)
             {
-                Thread.CurrentPrincipal = AnonymousClaimsPrincipal.Create();
+                SetPrincipal(Principal.Anonymous);
             }
 
             try
@@ -35,24 +39,26 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                 // returns an anonymous principal if no credential was found
                 var principal = _authN.Authenticate(request);
 
-                // run claims transformation
-                if (_authN.Configuration.ClaimsAuthenticationManager != null)
+                if (principal == null)
                 {
-                    principal = _authN.Configuration.ClaimsAuthenticationManager.Authenticate(request.RequestUri.AbsoluteUri, principal) as ClaimsPrincipal;
+                    throw new InvalidOperationException("No principal set");
                 }
 
-                // set the principal
-                Thread.CurrentPrincipal = principal;
-            }
-            catch
-            {
-                return Task<HttpResponseMessage>.Factory.StartNew(() =>
+                if (principal.Identity.IsAuthenticated)
                 {
-                    var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-                    SetAuthenticateHeader(response);
+                    // check for token request - if yes send token back and return
+                    if (_authN.IsSessionTokenRequest(request))
+                    {
+                        return SendSessionTokenResponse(principal);
+                    }
 
-                    return response;
-                });
+                    // else set the principal
+                    SetPrincipal(principal);
+                }
+            }
+            catch(SecurityTokenValidationException)
+            {
+                return SendUnauthorizedResponse();
             }
 
             return base.SendAsync(request, cancellationToken).ContinueWith(
@@ -69,9 +75,44 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                 });
         }
 
-        private void SetAuthenticateHeader(HttpResponseMessage response)
+        private Task<HttpResponseMessage> SendUnauthorizedResponse()
+        {
+            return Task<HttpResponseMessage>.Factory.StartNew(() =>
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                SetAuthenticateHeader(response);
+
+                return response;
+            });
+        }
+
+        private Task<HttpResponseMessage> SendSessionTokenResponse(ClaimsPrincipal principal)
+        {
+            var token = _authN.CreateSessionToken(principal);
+            var tokenResponse = _authN.CreateSessionTokenResponse(token);
+
+            return Task<HttpResponseMessage>.Factory.StartNew(() =>
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StringContent(tokenResponse, Encoding.UTF8, "application/json");
+
+                return response;
+            });
+        }
+
+        protected virtual void SetAuthenticateHeader(HttpResponseMessage response)
         {
             response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue(_authN.Configuration.DefaultAuthenticationScheme));
+        }
+
+        protected virtual void SetPrincipal(ClaimsPrincipal principal)
+        {
+            Thread.CurrentPrincipal = principal;
+
+            if (HttpContext.Current != null)
+            {
+                HttpContext.Current.User = principal;
+            }
         }
     }
 }

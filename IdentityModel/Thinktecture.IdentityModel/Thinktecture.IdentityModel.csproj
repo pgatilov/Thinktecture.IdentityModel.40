@@ -316,7 +316,7 @@
     <Compile Include="Tokens\Http\HttpAuthentication.cs" />
     <Compile Include="Tokens\Http\AuthenticationConfiguration.cs" />
     <Compile Include="Clients\WrapClient.cs" />
-    <Compile Include="Tokens\Http\SessionAuthenticationConfiguration.cs" />
+    <Compile Include="Tokens\Http\SessionTokenConfiguration.cs" />
     <Compile Include="Tokens\IHttpSecurityTokenHandler.cs" />
     <Compile Include="Tokens\MachineKeySessionSecurityTokenHandler.cs" />
     <Compile Include="Tokens\MachineKeyTransform.cs" />

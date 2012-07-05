@@ -49,5 +49,15 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         {
             return _identifier;
         }
+
+        public string WriteToken(SecurityToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanReadToken(string tokenString)
+        {
+            return true;
+        }
     }
 }

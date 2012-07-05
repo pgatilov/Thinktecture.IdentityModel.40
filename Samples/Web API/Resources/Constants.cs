@@ -1,5 +1,5 @@
 ﻿
-namespace Thinktecture.Samples
+namespace Resources
 {
     public static class Constants
     {

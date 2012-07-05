@@ -83,5 +83,10 @@ namespace Thinktecture.IdentityModel.Tokens
         {
             get { return typeof(SimpleSecurityToken); }
         }
+
+        public bool CanReadToken(string tokenString)
+        {
+            return true;
+        }
     }
 }

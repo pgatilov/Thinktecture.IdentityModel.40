@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.Web.Http;
+using Microsoft.IdentityModel.Claims;
+using Microsoft.IdentityModel.Tokens;
 using Thinktecture.IdentityModel;
 using Thinktecture.IdentityModel.Tokens.Http;
 
@@ -82,7 +83,7 @@ namespace Resources.Configuration
                 {
                     return Principal.Create("Custom",
                         new Claim("customerid", "123"),
-                        new Claim("email", "foo@customer.com"));
+                        new Claim("email", "foo@customer.com")).Identity as ClaimsIdentity;
                 }
 
                 return null;

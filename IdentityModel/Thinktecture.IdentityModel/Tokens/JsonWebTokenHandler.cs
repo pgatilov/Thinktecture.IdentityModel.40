@@ -551,5 +551,10 @@ namespace Thinktecture.IdentityModel.Tokens
         }
         #endregion
 
+
+        public bool CanReadToken(string tokenString)
+        {
+            return true;
+        }
     }
 }

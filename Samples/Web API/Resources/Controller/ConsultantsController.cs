@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
 using System.Threading;
-using System.Security;
+using System.Web.Http;
+using Resources.Security;
+using Thinktecture.IdentityModel.Authorization.WebApi;
 
 namespace Resources
 {
-    [Authorize]
+    [ApiAuthorize(typeof(ConsultantsAuthorizationManager))]
     public class ConsultantsController : ApiController
     {
         IConsultantsRepository _repository;
@@ -21,8 +22,6 @@ namespace Resources
         [AllowAnonymous]
         public IQueryable<Consultant> Get()
         {
-            //throw new SecurityException("go away, bad guy!!");
-
             return _repository.GetAll().AsQueryable();
         }
 
@@ -55,7 +54,7 @@ namespace Resources
             return response;
         }
 
-        public void Put(int id, Consultant consultant)
+        public void Put(int id, [FromBody] Consultant consultant)
         {
             // check if consultant exists
             var oldConsultant = _repository.GetAll().FirstOrDefault(c => c.ID == id);
@@ -68,10 +67,11 @@ namespace Resources
             consultant.ID = id;
             consultant.Owner = Thread.CurrentPrincipal.Identity.Name;
 
-            if (oldConsultant.Owner != consultant.Owner)
-            {
-                throw new SecurityException("Not authorized to change record");
-            }
+            // check moved to authorization manager
+            //if (oldConsultant.Owner != consultant.Owner)
+            //{
+            //    throw new SecurityException("Not authorized to change record");
+            //}
             
             _repository.Update(consultant);
         }

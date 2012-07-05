@@ -455,5 +455,10 @@ namespace Thinktecture.IdentityModel.Tokens
 
             return false;
         }
+
+        public bool CanReadToken(string tokenString)
+        {
+            return true;
+        }
     }
 }

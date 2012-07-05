@@ -176,5 +176,15 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
             return ValidateUserNameCredential(userName, password);
         }
+
+        public string WriteToken(SecurityToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanReadToken(string tokenString)
+        {
+            return true;
+        }
     }
 }
