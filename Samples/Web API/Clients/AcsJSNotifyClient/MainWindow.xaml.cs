@@ -3,14 +3,17 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Windows;
+using AcsJsNotifyClient;
 using Resources;
+using Thinktecture.IdentityModel.Clients.AccessControlService;
 using Thinktecture.Samples;
+
 
 namespace AcsJSNotifyClient
 {
     public partial class MainWindow : Window
     {
-        public JsonNotifyRequestSecurityTokenResponse RSTR { get; set; }
+        public JSNotifyRequestSecurityTokenResponse RSTR { get; set; }
 
         public MainWindow()
         {
