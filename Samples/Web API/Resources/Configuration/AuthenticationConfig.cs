@@ -30,7 +30,7 @@ namespace Resources.Configuration
 
             #region SimpleWebToken
             config.AddSimpleWebToken(
-                issuer: "http://identityserver.thinktecture.com/trust/initial",
+                issuer: "http://identity.thinktecture.com/trust",
                 audience: Constants.Realm,
                 signingKey: Constants.IdSrvSymmetricSigningKey,
                 options: AuthenticationOptions.ForAuthorizationHeader("IdSrv"));
@@ -46,7 +46,7 @@ namespace Resources.Configuration
 
             #region IdentityServer SAML
             var idsrvRegistry = new ConfigurationBasedIssuerNameRegistry();
-            idsrvRegistry.AddTrustedIssuer("a90d2bc088d949d63321e1152065234c1acda7b1", "Thinktecture IdSrv");
+            idsrvRegistry.AddTrustedIssuer("A1EED7897E55388FCE60FEF1A1EED81FF1CBAEC6", "Thinktecture IdSrv");
 
             var idsrvConfig = new SecurityTokenHandlerConfiguration();
             idsrvConfig.AudienceRestriction.AllowedAudienceUris.Add(new Uri(Constants.Realm));
@@ -58,7 +58,7 @@ namespace Resources.Configuration
 
             #region ADFS SAML
             var adfsRegistry = new ConfigurationBasedIssuerNameRegistry();
-            adfsRegistry.AddTrustedIssuer("b69346347f70a9c3720218aef1822a5c97b18ca5", "ADFS");
+            adfsRegistry.AddTrustedIssuer("8EC7F962CC083FF7C5997D8A4D5ED64B12E4C174", "ADFS");
 
             var adfsConfig = new SecurityTokenHandlerConfiguration();
             adfsConfig.AudienceRestriction.AllowedAudienceUris.Add(new Uri(Constants.Realm));
