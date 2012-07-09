@@ -14,9 +14,7 @@ namespace Thinktecture.IdentityModel
         {
             get
             {
-                var anonId = new ClaimsIdentity();
-                var anonPrincipal = ClaimsPrincipal.CreateFromIdentity(anonId);
-                return anonPrincipal as ClaimsPrincipal;
+                return ClaimsPrincipal.AnonymousPrincipal as ClaimsPrincipal;
             }
         }
 
