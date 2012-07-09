@@ -13,12 +13,17 @@ using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Tokens.Saml11;
+using Thinktecture.IdentityModel.Constants;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {
     class HttpSamlSecurityTokenHandler : Saml11SecurityTokenHandler, IHttpSecurityTokenHandler
     {
-        private string[] _identifier = new string[] { "Saml" };
+        private string[] _identifier = new string[] { 
+            "Saml",
+            TokenTypes.OasisWssSaml11TokenProfile11,
+            TokenTypes.Saml11TokenProfile11
+        };
 
         public HttpSamlSecurityTokenHandler()
             : base()
@@ -50,14 +55,9 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             return _identifier;
         }
 
-        public string WriteToken(SecurityToken token)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool CanReadToken(string tokenString)
         {
-            return true;
+            return base.CanReadToken(new XmlTextReader(new StringReader(tokenString)));
         }
     }
 }

@@ -256,7 +256,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             };
 
             var token = handler.CreateToken(descriptor);
-            return ((IHttpSecurityTokenHandler)handler).WriteToken(token);
+            return handler.WriteToken(token);
         }
 
         public virtual string CreateSessionTokenResponse(string sessionToken)

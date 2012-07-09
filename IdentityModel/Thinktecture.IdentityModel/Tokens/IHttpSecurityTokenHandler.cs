@@ -9,6 +9,5 @@ namespace Thinktecture.IdentityModel.Tokens
     {
         bool CanReadToken(string tokenString);
         SecurityToken ReadToken(string tokenString);
-        string WriteToken(SecurityToken token);
     }
 }
