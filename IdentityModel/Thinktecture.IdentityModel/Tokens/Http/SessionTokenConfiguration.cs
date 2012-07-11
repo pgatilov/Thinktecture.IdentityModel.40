@@ -56,7 +56,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         public SessionTokenConfiguration()
         {
             DefaultTokenLifetime = TimeSpan.FromHours(10);
-            EndpointAddress = "token";
+            EndpointAddress = "/token";
             Scheme = "Session";
             Audience = new Uri("http://session.tt");
             IssuerName = "session issuer";
