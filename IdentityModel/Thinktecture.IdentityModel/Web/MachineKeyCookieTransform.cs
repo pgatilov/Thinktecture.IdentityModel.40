@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿/*
+ * Copyright (c) Dominick Baier & Brock Allen.  All rights reserved.
+ * see license.txt
+ */
+
 using System.Text;
-using Microsoft.IdentityModel.Web;
 using System.Web.Security;
+using Microsoft.IdentityModel.Web;
 
 namespace Thinktecture.IdentityModel.Web
 {
