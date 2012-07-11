@@ -3,6 +3,7 @@ obj/
 packages/
 *.suo
 *.csproj.user
+*.user
 build/
 TestResults/
 docs/
