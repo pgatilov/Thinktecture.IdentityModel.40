@@ -30,7 +30,7 @@ namespace AcsJsNotifyClient
             this.webBrowser.ObjectForScripting = interop;
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(this.AcsNamespace)) throw new ArgumentException("Missing AcsNamespace");
             if (string.IsNullOrEmpty(this.Realm)) throw new ArgumentException("Missing Realm");
@@ -38,10 +38,18 @@ namespace AcsJsNotifyClient
             this.Show();
             Mouse.OverrideCursor = Cursors.Wait;
 
+            var sync = SynchronizationContext.Current;
+
             var disco = new IdentityProviderDiscoveryClient(AcsNamespace, Realm);
-            _providerList = await disco.GetAsync(Protocols.JavaScriptNotify);
-            this.DataContext = _providerList;
-            Mouse.OverrideCursor = Cursors.Arrow;
+            disco.GetAsync(Protocols.JavaScriptNotify).ContinueWith(task =>
+                {
+                    sync.Post(state =>
+                        {
+                            _providerList = task.Result;
+                            this.DataContext = _providerList;
+                            Mouse.OverrideCursor = Cursors.Arrow;
+                        }, null);
+                });
         }
         
         private void OnScriptNotify(object sender, ScriptNotifyEventArgs e)
