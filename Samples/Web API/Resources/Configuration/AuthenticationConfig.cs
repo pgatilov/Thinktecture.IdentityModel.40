@@ -59,6 +59,7 @@ namespace Resources.Configuration
             #region ADFS SAML
             var adfsRegistry = new ConfigurationBasedIssuerNameRegistry();
             adfsRegistry.AddTrustedIssuer("8EC7F962CC083FF7C5997D8A4D5ED64B12E4C174", "ADFS");
+            adfsRegistry.AddTrustedIssuer("b6 93 46 34 7f 70 a9 c3 72 02 18 ae f1 82 2a 5c 97 b1 8c a5", "PETS ADFS");
 
             var adfsConfig = new SecurityTokenHandlerConfiguration();
             adfsConfig.AudienceRestriction.AllowedAudienceUris.Add(new Uri(Constants.Realm));
