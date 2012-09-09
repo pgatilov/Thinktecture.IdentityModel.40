@@ -56,7 +56,11 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                     SetPrincipal(principal);
                 }
             }
-            catch(SecurityTokenValidationException)
+            catch (SecurityTokenValidationException)
+            {
+                return SendUnauthorizedResponse();
+            }
+            catch (SecurityTokenException)
             {
                 return SendUnauthorizedResponse();
             }
