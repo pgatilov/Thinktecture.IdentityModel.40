@@ -4,7 +4,7 @@ namespace Resources
     public static class Constants
     {
         public const string WebHost = "localhost";
-        public const string SelfHost = "localhost:9000";
+        public const string SelfHost = "localhost:44301";
         public const string IdSrv = "identity.thinktecture.com";
         public const string ACS = "ttacssample.accesscontrol.windows.net"; 
         public const string ADFS = "www.pets.local";
