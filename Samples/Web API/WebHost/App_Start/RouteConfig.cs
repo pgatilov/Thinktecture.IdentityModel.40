@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Resources.Security;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,6 +23,15 @@ namespace WebApiSecurity
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            
+            // default API route with claims transformation
+           routes.MapHttpRoute(
+               name: "DefaultApiWithTransformation",
+               routeTemplate: "api2/identity",
+               defaults: new { controller = "Identity" } ,
+               constraints: null,
+               handler: new ClaimsTransformationHandler(new ConsultantsClaimsTransformer(), GlobalConfiguration.Configuration)
+           );
 
             // default MVC route
             routes.MapRoute(
