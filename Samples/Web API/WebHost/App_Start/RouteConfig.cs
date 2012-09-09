@@ -1,4 +1,5 @@
-﻿using Resources.Security;
+﻿using Resources.Configuration;
+using Resources.Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,14 +25,23 @@ namespace WebApiSecurity
                 defaults: new { id = RouteParameter.Optional }
             );
             
-            // default API route with claims transformation
-           routes.MapHttpRoute(
-               name: "DefaultApiWithTransformation",
-               routeTemplate: "api2/identity",
-               defaults: new { controller = "Identity" } ,
-               constraints: null,
-               handler: new ClaimsTransformationHandler(new ConsultantsClaimsTransformer(), GlobalConfiguration.Configuration)
-           );
+            // API route with claims transformation
+            routes.MapHttpRoute(
+                name: "DefaultApiWithTransformation",
+                routeTemplate: "api2/identity",
+                defaults: new { controller = "Identity" } ,
+                constraints: null,
+                handler: new ClaimsTransformationHandler(new ConsultantsClaimsTransformer(), GlobalConfiguration.Configuration)
+            );
+
+            // API route with per-route authentication
+            routes.MapHttpRoute(
+                name: "DefaultApiPerRouteAuthN",
+                routeTemplate: "api3/identity",
+                defaults: new { controller = "Identity" },
+                constraints: null,
+                handler: new AuthenticationHandler(AuthenticationConfig.CreateConfiguration(), GlobalConfiguration.Configuration)
+            );
 
             // default MVC route
             routes.MapRoute(

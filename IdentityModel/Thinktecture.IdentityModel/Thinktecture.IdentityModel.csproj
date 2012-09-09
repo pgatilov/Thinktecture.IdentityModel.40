@@ -231,6 +231,7 @@
     <Compile Include="Clients\AccessControlService\IdentityProviderInformation.cs" />
     <Compile Include="Clients\AccessControlService\JsonNotifyRequestSecurityTokenResponse.cs" />
     <Compile Include="Constants\Algorithms.cs" />
+    <Compile Include="Constants\Internal.cs" />
     <Compile Include="Constants\JwtConstants.cs" />
     <Compile Include="Constants\OAuth2Constants.cs" />
     <Compile Include="Constants\SwtConstants.cs" />
