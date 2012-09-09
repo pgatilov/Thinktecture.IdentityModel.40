@@ -14,6 +14,8 @@ using System;
 using System.IdentityModel.Tokens;
 using System.Web;
 using System.Text;
+using System.Web.Http;
+using System.Web.Http.Dispatcher;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {
@@ -21,9 +23,14 @@ namespace Thinktecture.IdentityModel.Tokens.Http
     {
         HttpAuthentication _authN;
 
-        public AuthenticationHandler(AuthenticationConfiguration configuration)
+        public AuthenticationHandler(AuthenticationConfiguration configuration, HttpConfiguration httpConfiguration = null)
         {
             _authN = new HttpAuthentication(configuration);
+
+            if (httpConfiguration != null)
+            {
+                InnerHandler = new HttpControllerDispatcher(httpConfiguration);
+            }
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -106,7 +113,10 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
         protected virtual void SetAuthenticateHeader(HttpResponseMessage response)
         {
-            response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue(_authN.Configuration.DefaultAuthenticationScheme));
+            if (_authN.Configuration.SendWwwAuthenticateResponseHeader)
+            {
+                response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue(_authN.Configuration.DefaultAuthenticationScheme));
+            }
         }
 
         protected virtual void SetPrincipal(ClaimsPrincipal principal)
