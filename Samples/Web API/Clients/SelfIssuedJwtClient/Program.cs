@@ -8,6 +8,7 @@ using Thinktecture.IdentityModel.Constants;
 using Thinktecture.IdentityModel.Extensions;
 using Thinktecture.IdentityModel.Tokens;
 using Thinktecture.Samples;
+using Sys = Microsoft.IdentityModel.Claims;
 
 namespace JsonWebTokenClient
 {
@@ -53,10 +54,10 @@ namespace JsonWebTokenClient
                 Issuer = "http://selfissued.test",
                 Audience = new Uri(Constants.Realm),
 
-                Claims = new List<Claim>
+                Claims = new Dictionary<string, string>
                 {
-                    new Claim(ClaimTypes.Name, "bob"),
-                    new Claim(ClaimTypes.Email, "bob@thinktecture.com")
+                    { Sys.ClaimTypes.Name, "bob" },
+                    { Sys.ClaimTypes.Email, "bob@thinktecture.com" }
                 }
             };
 
