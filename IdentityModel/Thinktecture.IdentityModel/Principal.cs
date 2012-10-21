@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using Microsoft.IdentityModel.Claims;
+using System.Linq;
 
 namespace Thinktecture.IdentityModel
 {
@@ -21,6 +22,16 @@ namespace Thinktecture.IdentityModel
         public static ClaimsPrincipal Create(string authenticationType, params Claim[] claims)
         {
             return new ClaimsPrincipal(new IClaimsIdentity[]{new ClaimsIdentity(claims, authenticationType)});
+        }
+
+        public static IEnumerable<Claim> CreateRoles(string[] roleNames)
+        {
+            if (roleNames == null || roleNames.Count() == 0)
+            {
+                return new Claim[] { };
+            }
+
+            return new List<Claim>(from r in roleNames select new Claim(ClaimTypes.Role, r)).ToArray();
         }
     }
 }
