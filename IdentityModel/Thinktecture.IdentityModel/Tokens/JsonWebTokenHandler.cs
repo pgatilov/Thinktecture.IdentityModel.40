@@ -64,7 +64,7 @@ namespace Thinktecture.IdentityModel.Tokens
             {
                 foreach (var claim in descriptor.Subject.Claims)
                 {
-                    jwt.Claims.Add(claim.ClaimType, claim.Value);
+                    jwt.AddClaim(claim.ClaimType, claim.Value);
                 }
             }
 
