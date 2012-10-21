@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Thinktecture.IdentityModel;
 using Thinktecture.IdentityModel.Extensions;
+using Thinktecture.IdentityModel.Diagnostics;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {
@@ -44,6 +45,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
                 if (principal.Identity.IsAuthenticated)
                 {
+                    Tracing.Information(Area.HttpAuthentication, "Client authenticated using session token");
                     return principal;
                 }
             }
@@ -54,10 +56,13 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                 var authZ = request.Headers.Authorization;
                 if (authZ != null)
                 {
+                    Tracing.Verbose(Area.HttpAuthentication, "Mapping for authorization header found: " + authZ.Scheme);
+
                     var principal = AuthenticateAuthorizationHeader(authZ.Scheme, authZ.Parameter);
 
                     if (principal.Identity.IsAuthenticated)
                     {
+                        Tracing.Information(Area.HttpAuthentication, "Client authenticated using authorization header mapping: " + authZ.Scheme);
                         return Transform(resourceName, principal) as ClaimsPrincipal;
                     }
                 }
@@ -68,10 +73,14 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             {
                 if (request.Headers != null)
                 {
+                    Tracing.Verbose(Area.HttpAuthentication, "Mapping for header header found.");
+
                     var principal = AuthenticateHeaders(request.Headers);
 
                     if (principal.Identity.IsAuthenticated)
                     {
+                        Tracing.Information(Area.HttpAuthentication, "Client authenticated using header mapping");
+
                         return Transform(resourceName, principal);
                     }
                 }
@@ -82,10 +91,13 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             {
                 if (request.RequestUri != null && !string.IsNullOrWhiteSpace(request.RequestUri.Query))
                 {
+                    Tracing.Verbose(Area.HttpAuthentication, "Mapping for query string found.");
+
                     var principal = AuthenticateQueryStrings(request.RequestUri);
 
                     if (principal.Identity.IsAuthenticated)
                     {
+                        Tracing.Information(Area.HttpAuthentication, "Client authenticated using query string mapping");
                         return Transform(resourceName, principal);
                     }
                 }
@@ -98,10 +110,13 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
                 if (cert != null)
                 {
+                    Tracing.Verbose(Area.HttpAuthentication, "Mapping for client certificate found.");
+
                     var principal = AuthenticateClientCertificate(cert);
 
                     if (principal.Identity.IsAuthenticated)
                     {
+                        Tracing.Information(Area.HttpAuthentication, "Client authenticated using client certificate");
                         return Transform(resourceName, principal);
                     }
                 }
@@ -325,6 +340,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
             if (handler != null)
             {
+                Tracing.Information(Area.HttpAuthentication, "Invoking token handler: " + handler.GetType().FullName);
                 var token = ((IHttpSecurityTokenHandler)handler).ReadToken(tokenString);
                 var principal = new ClaimsPrincipal(handler.ValidateToken(token));
 
