@@ -216,6 +216,7 @@
     <Compile Include="Authorization\ClaimPermissionAttribute.cs" />
     <Compile Include="Authorization\ClaimsAuthorization.cs" />
     <Compile Include="Authorization\DefaultPolicy.cs" />
+    <Compile Include="Authorization\MVC\ClaimsAuthorizeAttribute.cs" />
     <Compile Include="Authorization\WebApi\ApiAuthorizeAttribute.cs" />
     <Compile Include="Authorization\WebApi\ClaimsAuthorizeAttribute.cs" />
     <Compile Include="Authorization\WebApi\GlobalAuthorization.cs" />
