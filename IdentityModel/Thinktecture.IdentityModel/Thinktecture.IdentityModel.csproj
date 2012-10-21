@@ -326,6 +326,7 @@
     <Compile Include="Tokens\IHttpSecurityTokenHandler.cs" />
     <Compile Include="Tokens\MachineKeySessionSecurityTokenHandler.cs" />
     <Compile Include="Tokens\MachineKeyTransform.cs" />
+    <Compile Include="Tokens\MetadataBasedIssuerNameRegistry.cs" />
     <Compile Include="Web\MachineKeyCookieTransform.cs" />
     <Compile Include="Web\MachineKeySessionSecurityTokenHandler.cs" />
     <Compile Include="WSTrust\CertificateWSTrustBindings.cs" />
