@@ -19,11 +19,12 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 {
     class HttpSaml2SecurityTokenHandler : Saml2SecurityTokenHandler, IHttpSecurityTokenHandler
     {
-        private string[] _identifier = new string[] { 
-            "Saml2", 
-            TokenTypes.OasisWssSaml2TokenProfile11, 
-            TokenTypes.Saml2TokenProfile11 
-        };
+        private string[] _identifier = new string[] 
+            { 
+                "Saml2",
+                TokenTypes.OasisWssSaml2TokenProfile11,
+                TokenTypes.Saml2TokenProfile11
+            };
 
         public HttpSaml2SecurityTokenHandler()
             : base()

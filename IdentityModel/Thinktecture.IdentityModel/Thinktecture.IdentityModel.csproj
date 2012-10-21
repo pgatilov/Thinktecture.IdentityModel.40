@@ -331,6 +331,7 @@
     <Compile Include="Tokens\MetadataBasedIssuerNameRegistry.cs" />
     <Compile Include="Web\MachineKeyCookieTransform.cs" />
     <Compile Include="Web\MachineKeySessionSecurityTokenHandler.cs" />
+    <Compile Include="Web\ProtectionMode.cs" />
     <Compile Include="WSTrust\CertificateWSTrustBindings.cs" />
     <Compile Include="WSTrust\IssuedTokenWSTrustBinding.cs" />
     <Compile Include="WSTrust\KerberosWSTrustBinding.cs" />

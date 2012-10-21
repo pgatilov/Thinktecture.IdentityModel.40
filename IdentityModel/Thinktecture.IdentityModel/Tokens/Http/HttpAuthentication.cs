@@ -63,6 +63,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                     if (principal.Identity.IsAuthenticated)
                     {
                         Tracing.Information(Area.HttpAuthentication, "Client authenticated using authorization header mapping: " + authZ.Scheme);
+
                         return Transform(resourceName, principal) as ClaimsPrincipal;
                     }
                 }
@@ -217,7 +218,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         {
             SecurityTokenHandlerCollection handlers;
             var token = new X509SecurityToken(certificate);
-            
+
             if (Configuration.TryGetClientCertificateMapping(out handlers))
             {
                 var identity = handlers.First().ValidateToken(token);
@@ -226,7 +227,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
 
             return Principal.Anonymous;
         }
-        
+
         public virtual ClaimsPrincipal Transform(string resource, ClaimsPrincipal incomingPrincipal)
         {
             if (Configuration.ClaimsAuthenticationManager != null)
@@ -252,7 +253,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             {
                 return true;
             }
-            
+
             return false;
         }
 
@@ -341,6 +342,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             if (handler != null)
             {
                 Tracing.Information(Area.HttpAuthentication, "Invoking token handler: " + handler.GetType().FullName);
+
                 var token = ((IHttpSecurityTokenHandler)handler).ReadToken(tokenString);
                 var principal = new ClaimsPrincipal(handler.ValidateToken(token));
 

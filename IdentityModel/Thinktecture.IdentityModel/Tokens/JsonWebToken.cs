@@ -86,6 +86,7 @@ namespace Thinktecture.IdentityModel.Tokens
         //public List<Claim> Claims { get; set; }
         public Dictionary<string, string> Claims;
 
+
         public JsonWebToken()
         {
             Header = new JwtHeader();

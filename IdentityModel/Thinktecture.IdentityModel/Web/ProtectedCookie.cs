@@ -1,31 +1,43 @@
 ﻿/*
- * Copyright (c) Dominick Baier & Brock Allen.  All rights reserved.
+ * Copyright (c) Dominick Baier.  All rights reserved.
  * see license.txt
  */
 
+using Microsoft.IdentityModel.Web;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web;
-using Microsoft.IdentityModel.Web;
+using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Web
 {
     public class ProtectedCookie
     {
         private List<CookieTransform> _transforms;
-        private ChunkedCookieHandler _handler = new ChunkedCookieHandler();
+        private static ChunkedCookieHandler _handler = new ChunkedCookieHandler();
 
         // DPAPI protection (single server)
         public ProtectedCookie()
         {
-            _transforms = new List<CookieTransform>
-            { 
-                new DeflateCookieTransform(), 
-                new ProtectedDataCookieTransform() 
-            };
+            SetDpapiTransforms();
+        }
+
+        public ProtectedCookie(ProtectionMode mode)
+        {
+            switch (mode)
+            {
+                case ProtectionMode.DPAPI:
+                    SetDpapiTransforms();
+                    return;
+                case ProtectionMode.MachineKey:
+                    SetMachineKeyTransforms();
+                    return;
+                default:
+                    throw new ArgumentException("mode");
+            }
         }
 
         // RSA protection (load balanced)
@@ -78,7 +90,7 @@ namespace Thinktecture.IdentityModel.Web
             return DecodeCookieValue(bytes);
         }
 
-        public void Delete(string name)
+        public static void Delete(string name)
         {
             _handler.Delete(name);
         }
@@ -106,6 +118,24 @@ namespace Thinktecture.IdentityModel.Web
             }
 
             return Encoding.UTF8.GetString(buffer);
+        }
+
+        private void SetDpapiTransforms()
+        {
+            _transforms = new List<CookieTransform>
+            { 
+                new DeflateCookieTransform(), 
+                new ProtectedDataCookieTransform() 
+            };
+        }
+
+        private void SetMachineKeyTransforms()
+        {
+            _transforms = new List<CookieTransform>
+            { 
+                new DeflateCookieTransform(), 
+                new MachineKeyTransform() 
+            };
         }
     }
 }
