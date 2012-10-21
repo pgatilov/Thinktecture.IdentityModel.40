@@ -102,7 +102,6 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                     if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         SetAuthenticateHeader(response);
-                        SetNoRedirectMarker(request);
                     }
 
                     return response;
@@ -115,7 +114,6 @@ namespace Thinktecture.IdentityModel.Tokens.Http
             {
                 var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
                 SetAuthenticateHeader(response);
-                SetNoRedirectMarker(request);
 
                 return response;
             });
@@ -142,22 +140,6 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                 Tracing.Verbose(Area.HttpAuthentication, "Setting Www-Authenticate header with scheme: " + _authN.Configuration.DefaultAuthenticationScheme);
 
                 response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue(_authN.Configuration.DefaultAuthenticationScheme));
-            }
-        }
-
-        protected virtual void SetNoRedirectMarker(HttpRequestMessage request)
-        {
-            if (_authN.Configuration.SetNoRedirectMarker)
-            {
-                if (HttpContext.Current != null)
-                {
-                    HttpContext.Current.Items[Internal.NoRedirectLabel] = true;
-                }
-                else if (request.Properties.ContainsKey("MS_HttpContext") && request.Properties["MS_HttpContext"] != null)
-                {
-                    var context = request.Properties["MS_HttpContext"] as HttpContextWrapper;
-                    context.Items[Internal.NoRedirectLabel] = true;
-                }
             }
         }
 
