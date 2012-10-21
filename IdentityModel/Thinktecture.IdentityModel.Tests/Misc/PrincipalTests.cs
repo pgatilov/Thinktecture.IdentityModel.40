@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Claims;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace Thinktecture.IdentityModel.Tests.Misc
@@ -13,7 +14,7 @@ namespace Thinktecture.IdentityModel.Tests.Misc
             var ap = Principal.Anonymous;
 
             Assert.IsFalse(ap.Identity.IsAuthenticated);
-            Assert.AreEqual<string>("", ap.Identity.Name);
+            Assert.IsTrue(String.IsNullOrEmpty(ap.Identity.Name));
         }
 
         [TestMethod]
