@@ -38,8 +38,11 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         {
             string resourceName = request.RequestUri.AbsoluteUri;
 
-            // if session feature is enabled (and this is not a token request), check for session token first
-            if (Configuration.EnableSessionToken && !IsSessionTokenRequest(request))
+            // If session feature is enabled check for session token first.
+            // Session token authentication for a session token request is enabled by a special configuration flag.
+            if (Configuration.EnableSessionToken &&
+                   (Configuration.SessionToken.AllowSlidingSessionTokenExpiration || !IsSessionTokenRequest(request))
+               )
             {
                 var principal = AuthenticateSessionToken(request);
 

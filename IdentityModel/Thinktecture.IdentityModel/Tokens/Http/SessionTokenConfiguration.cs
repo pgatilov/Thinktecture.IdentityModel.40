@@ -20,6 +20,13 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         public string SigningKey { get; set; }
         public string IssuerName { get; set; }
 
+        /// <summary>
+        /// Allows clients to send session token requests while providing a session token for authentication.
+        /// If a request is authenticated by the session token, this results in a new session token being issued holding
+        /// the same identity but with new expiration time. The default is false.
+        /// </summary>
+        public bool AllowSlidingSessionTokenExpiration { get; set; }
+
         public JsonWebTokenHandler SecurityTokenHandler
         {
             get
