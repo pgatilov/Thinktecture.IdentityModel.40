@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Claims;
 using Microsoft.IdentityModel.Tokens;

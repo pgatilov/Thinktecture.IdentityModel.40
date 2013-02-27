@@ -8,12 +8,12 @@ using System.Collections.Generic;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Xml;
-using System.Linq;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Extensions
 {

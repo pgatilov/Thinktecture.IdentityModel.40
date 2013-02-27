@@ -3,13 +3,13 @@
  * see license.txt
  */
 
-using Microsoft.IdentityModel.Claims;
-using Microsoft.IdentityModel.Web;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
+using Microsoft.IdentityModel.Claims;
+using Microsoft.IdentityModel.Web;
 
 namespace Thinktecture.IdentityModel.Authorization
 {

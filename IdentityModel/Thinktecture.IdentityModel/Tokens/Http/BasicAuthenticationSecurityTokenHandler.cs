@@ -5,11 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Thinktecture.IdentityModel.Claims;

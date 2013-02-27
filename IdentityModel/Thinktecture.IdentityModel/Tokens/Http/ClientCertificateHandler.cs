@@ -3,11 +3,9 @@
  * see license.txt
  */
 
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Selectors;
-using System.IdentityModel.Tokens;
-using System.ServiceModel.Security;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {

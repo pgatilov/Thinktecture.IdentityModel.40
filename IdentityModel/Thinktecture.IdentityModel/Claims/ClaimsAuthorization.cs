@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Security;
 using System.Threading;
-using Thinktecture.IdentityModel.Extensions;
 using Microsoft.IdentityModel.Claims;
 using Microsoft.IdentityModel.Web;
 

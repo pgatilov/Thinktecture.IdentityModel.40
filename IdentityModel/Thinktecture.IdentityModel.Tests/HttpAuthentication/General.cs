@@ -1,8 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
-using System.Web.Http;
 using Microsoft.IdentityModel.Claims;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

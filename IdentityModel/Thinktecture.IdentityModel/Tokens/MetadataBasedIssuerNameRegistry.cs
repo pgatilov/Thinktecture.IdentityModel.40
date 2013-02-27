@@ -1,10 +1,10 @@
-﻿using Microsoft.IdentityModel.Protocols.WSFederation.Metadata;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.IdentityModel.Protocols.WSFederation.Metadata;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Tokens
 {

@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Tokens;

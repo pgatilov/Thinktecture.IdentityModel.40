@@ -3,20 +3,18 @@
  * see license.txt
  */
 
+using System;
+using System.IdentityModel.Tokens;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Thinktecture.IdentityModel.Claims;
-using Microsoft.IdentityModel.Claims;
-using System;
-using System.IdentityModel.Tokens;
 using System.Web;
-using System.Text;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
-using Thinktecture.IdentityModel.Constants;
+using Microsoft.IdentityModel.Claims;
 using Thinktecture.IdentityModel.Diagnostics;
 
 namespace Thinktecture.IdentityModel.Tokens.Http

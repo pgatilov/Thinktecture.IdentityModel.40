@@ -1,7 +1,7 @@
-﻿using Microsoft.IdentityModel.Claims;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Linq;
+using Microsoft.IdentityModel.Claims;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Thinktecture.IdentityModel.Tests.Misc
 {

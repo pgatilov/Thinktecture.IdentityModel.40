@@ -6,22 +6,16 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Globalization;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http.Routing;
 using Microsoft.IdentityModel.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
-using Thinktecture.IdentityModel;
-using Thinktecture.IdentityModel.Extensions;
 using Thinktecture.IdentityModel.Diagnostics;
+using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {

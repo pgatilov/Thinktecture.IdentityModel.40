@@ -1,10 +1,10 @@
-﻿using Microsoft.IdentityModel.Claims;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
+using Microsoft.IdentityModel.Claims;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {

@@ -3,13 +3,12 @@
  * see license.txt
  */
 
-using Microsoft.IdentityModel.Web;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Web;
+using Microsoft.IdentityModel.Web;
 using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Web
