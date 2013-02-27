@@ -74,7 +74,7 @@ namespace Thinktecture.IdentityModel.Web
                     var diff = token.ValidTo.Add(sam.ServiceConfiguration.MaxClockSkew).Subtract(DateTime.UtcNow);
                     if (diff <= TimeSpan.Zero) return;
 
-                    var halfWay = duration.TotalMinutes / 2;
+                    var halfWay = duration.Add(sam.ServiceConfiguration.MaxClockSkew).TotalMinutes / 2;
                     var timeLeft = diff.TotalMinutes;
                     if (timeLeft <= halfWay)
                     {
@@ -152,6 +152,13 @@ namespace Thinktecture.IdentityModel.Web
                 throw new Exception("WSFederationAuthenticationModule not configured.");
             }
             fam.PersistentCookiesOnPassiveRedirects = true;
+
+            var handler = (SessionSecurityTokenHandler)FederatedAuthentication.ServiceConfiguration.SecurityTokenHandlers[typeof(SessionSecurityToken)];
+            var skew = FederatedAuthentication.ServiceConfiguration.MaxClockSkew;
+            var duration = handler.TokenLifetime + skew;
+
+            var sam = FederatedAuthentication.SessionAuthenticationModule;
+            sam.CookieHandler.PersistentSessionLifetime = duration;
         }
     }
 }
