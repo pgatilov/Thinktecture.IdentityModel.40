@@ -16,7 +16,6 @@ using Microsoft.IdentityModel.Protocols.WSTrust;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Thinktecture.IdentityModel.Diagnostics;
-using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {

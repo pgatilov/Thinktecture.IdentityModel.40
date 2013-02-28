@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.IdentityModel.Tokens;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Security;
 using System.Xml;
-using Thinktecture.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Tokens
 {
