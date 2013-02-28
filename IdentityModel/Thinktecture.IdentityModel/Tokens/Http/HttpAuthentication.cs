@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.IdentityModel.Claims;
+using Microsoft.IdentityModel.Protocols.WSTrust;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Thinktecture.IdentityModel.Diagnostics;
@@ -260,6 +261,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
                 AppliesToAddress = Configuration.SessionToken.Audience.AbsoluteUri,
                 TokenIssuerName = Configuration.SessionToken.IssuerName,
                 SigningCredentials = new HmacSigningCredentials(Configuration.SessionToken.SigningKey),
+                Lifetime = new Lifetime(DateTime.UtcNow, DateTime.UtcNow.Add(Configuration.SessionToken.DefaultTokenLifetime)),
                 Subject = principal.Identities.First()
             };
 
@@ -271,7 +273,7 @@ namespace Thinktecture.IdentityModel.Tokens.Http
         {
             var response = new JObject();
             response["access_token"] = sessionToken;
-            response["expires_in"] = DateTime.UtcNow.Add(Configuration.SessionToken.DefaultTokenLifetime).ToEpochTime();
+            response["expires_in"] = Configuration.SessionToken.DefaultTokenLifetime.TotalSeconds;
 
             return response.ToString();
         }
