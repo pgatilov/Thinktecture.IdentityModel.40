@@ -327,9 +327,13 @@
     <Compile Include="Clients\WrapClient.cs" />
     <Compile Include="Tokens\Http\SessionTokenConfiguration.cs" />
     <Compile Include="Tokens\IHttpSecurityTokenHandler.cs" />
+    <Compile Include="Tokens\IssuerNameRegistry\CachingMetadataBasedIssuerNameRegistry.cs" />
+    <Compile Include="Tokens\IssuerNameRegistry\FileBasedMetadataCache.cs" />
+    <Compile Include="Tokens\IssuerNameRegistry\IMetadataCache.cs" />
+    <Compile Include="Tokens\IssuerNameRegistry\MachineKeyMetadataCache.cs" />
+    <Compile Include="Tokens\IssuerNameRegistry\MetadataBasedIssuerNameRegistry.cs" />
     <Compile Include="Tokens\MachineKeySessionSecurityTokenHandler.cs" />
     <Compile Include="Tokens\MachineKeyTransform.cs" />
-    <Compile Include="Tokens\MetadataBasedIssuerNameRegistry.cs" />
     <Compile Include="Web\ITokenCacheRepository.cs" />
     <Compile Include="Web\MachineKeyCookieTransform.cs" />
     <Compile Include="Web\MachineKeySessionSecurityTokenHandler.cs" />
