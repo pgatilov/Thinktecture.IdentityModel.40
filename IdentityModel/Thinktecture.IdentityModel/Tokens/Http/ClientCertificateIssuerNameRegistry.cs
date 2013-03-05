@@ -3,10 +3,10 @@
  * see license.txt
  */
 
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens;
 using System.Linq;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
 {

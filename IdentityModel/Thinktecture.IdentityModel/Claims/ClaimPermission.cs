@@ -15,7 +15,6 @@ using System.Text;
 using System.Threading;
 using Microsoft.IdentityModel.Claims;
 using Microsoft.IdentityModel.Web;
-using Thinktecture.IdentityModel.Extensions;
 
 namespace Thinktecture.IdentityModel.Claims
 {

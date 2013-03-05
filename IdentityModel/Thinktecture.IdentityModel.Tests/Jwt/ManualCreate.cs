@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.IdentityModel.Claims;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Thinktecture.IdentityModel.Constants;
 using Thinktecture.IdentityModel.Tests.Helper;
 using Thinktecture.IdentityModel.Tokens;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Tests.Jwt
 {

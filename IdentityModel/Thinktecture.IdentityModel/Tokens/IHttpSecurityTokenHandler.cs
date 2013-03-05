@@ -1,7 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.IdentityModel.Tokens;
-using Microsoft.IdentityModel.Claims;
-using Microsoft.IdentityModel.Tokens;
+﻿using System.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Tokens
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Thinktecture.IdentityModel.Constants;
-using Thinktecture.IdentityModel.Tests.Helper;
-using Thinktecture.IdentityModel.Tokens;
-
+﻿
 namespace Thinktecture.IdentityModel.Tests.Jwt
 {
     // Json.Net and Spec have different formats - so this is pointless

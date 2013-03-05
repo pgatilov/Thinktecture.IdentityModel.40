@@ -4,7 +4,6 @@
  */
 
 using System.IdentityModel.Selectors;
-using System.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Thinktecture.IdentityModel.Tokens.Http
